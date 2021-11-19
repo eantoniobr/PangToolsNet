@@ -1,26 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UpdateList;
-
 namespace TestTools
 {
     class Program
     {
         static void Main(string[] args)
         {
-            string filePath = @"C:\\Users\\eric.silva\\desktop\\updatelist";
-            string fileOutput = filePath + ".xml" ;
 
-            var decrypted = new FileCrypt().DecryptEncryptFile(filePath, FileCrypt.KeyEnum.JP, FileCrypt.OperacaoEnum.Decrypt);
-            System.IO.File.WriteAllBytes(fileOutput, decrypted);
+            Console.WriteLine("UpdateList - Encrypt/Decrypt ");
+            Console.WriteLine("Wait insert to file...");
+            for (; ; )
+            {
+                if (args.Length > 0)
+                {
+                    string filePath = args[0];
+                    for (int i = 0; i < 6; i++)
+                    {
+                        var result = new FileCrypt().DecryptEncryptFile(filePath, out byte[] decrypted, (FileCrypt.KeyEnum)i);
 
-            var encrypted = new FileCrypt().DecryptEncryptFile(fileOutput, FileCrypt.KeyEnum.JP, FileCrypt.OperacaoEnum.Encrypt);
-            System.IO.File.WriteAllBytes(filePath + "_encrypt", encrypted);
-
-
+                        if (FileCrypt.Result.Sucess == result)
+                        {
+                            Console.WriteLine("Sucess ! ");
+                            break;
+                        }
+                        else if(FileCrypt.Result.Test_New_Key == result) { Console.WriteLine("Testando nova chave..."); }
+                    }
+                }
+                Console.ReadLine();
+            }
         }
     }
 }

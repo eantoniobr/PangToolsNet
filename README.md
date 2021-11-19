@@ -4,15 +4,18 @@ Ferramentas .NET para Pangya
 [UpdateList]
 Baseado na biblioteca de: DaveDevil's - (Obrigado por compartilhar)
 
-Exemplo de uso: 
+Exemplo de uso:    
 
-string filePath = @"C:\\Users\\yourUserName\\desktop\\updatelist";
-string fileOutput = filePath + ".xml" ;
+[Uso do Método DecryptEncryptFile]
 
-//Decript
-var decrypted = new FileCrypt().DecryptEncryptFile(filePath, FileCrypt.KeyEnum.JP, FileCrypt.OperacaoEnum.Decrypt);
-System.IO.File.WriteAllBytes(fileOutput, decrypted);
+var result = new FileCrypt().DecryptEncryptFile(filePath, out byte[] decrypted, (FileCrypt.KeyEnum)i);
 
-//Encrypt
-var encrypted = new FileCrypt().DecryptEncryptFile(fileOutput, FileCrypt.KeyEnum.JP, FileCrypt.OperacaoEnum.Encrypt);
-System.IO.File.WriteAllBytes(filePath + "_encrypt", encrypted);
+[Informações DecryptEncryptFile]
+
+filePath = local onde o arquivo está 
+
+decrypted = objeto com dados encriptografados ou decriptografados
+
+i = Chave Key Enum(usado somente para girar até encontrar uma chave compatível)
+
+result = gera um resultado do tipo (sucesso, testar nova chave, error, falied)
